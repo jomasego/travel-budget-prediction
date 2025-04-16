@@ -1,0 +1,28 @@
+# Model files
+# *.joblib # Removed - Artifacts should be committed for this project
+# *.pkl   # Removed - Artifacts should be committed for this project
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Data (optional - keep if data is large/private)
+# data/
+
+# IDE/Editor specific
+.vscode/
+.idea/
+*.swp
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Notebook checkpoints
+.ipynb_checkpoints/

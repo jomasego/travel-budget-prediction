@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Activity Budget Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Predict Your Activity Budget</h1>
+
+        <form id="prediction-form">
+            <div class="form-group">
+                <label for="adults">Number of Adults:</label>
+                <input type="number" id="adults" name="adults" required min="0">
+            </div>
+
+            <div class="form-group">
+                <label for="children">Number of Children & Babies:</label>
+                <input type="number" id="children" name="children" required min="0">
+            </div>
+
+            <div class="form-group">
+                <label for="trip-duration">Trip Duration Category:</label>
+                <select id="trip-duration" name="trip-duration" required>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <select id="country" name="country" required>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
+
+            <div class="form-group form-group-checkboxes">
+                <label>Trip Interests (Select all that apply):</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="theme-parks" name="Theme Parks" value="1">
+                    <label for="theme-parks">Theme Parks</label>
+                </div>
+                 <div class="checkbox-group">
+                    <input type="checkbox" id="hidden-gems" name="Hidden Gems" value="1">
+                    <label for="hidden-gems">Hidden Gems</label>
+                </div>
+                 <div class="checkbox-group">
+                    <input type="checkbox" id="cultural-attractions" name="Cultural Attractions" value="1">
+                    <label for="cultural-attractions">Cultural Attractions</label>
+                </div>
+                 <div class="checkbox-group">
+                    <input type="checkbox" id="beach-pools" name="Beach or Pools" value="1">
+                    <label for="beach-pools">Beach/Pools</label>
+                </div>
+                 <div class="checkbox-group">
+                    <input type="checkbox" id="sunset-spots" name="Sunset Spots" value="1">
+                    <label for="sunset-spots">Sunset Spots</label>
+                </div>
+                 <div class="checkbox-group">
+                    <input type="checkbox" id="nature-getaway" name="Nature Getaway" value="1">
+                    <label for="nature-getaway">Nature Getaway</label>
+                </div>
+            </div>
+
+            <button type="submit">Predict Budgets</button>
+        </form>
+
+        <div id="error-message"></div>
+
+        <div id="results">
+            <h2>Prediction Results</h2>
+            <p id="prediction-hotel">Predicted Hotel Budget: --</p>
+            <p id="prediction-food">Predicted Food Budget: --</p>
+            <p id="prediction-activity">Predicted Activity Budget: --</p>
+            <p id="model-parameters">Based on: --</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
