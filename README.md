@@ -1,128 +1,134 @@
-# Travel Budget Prediction Pipeline
+# 🌍 Travel Budget Predictor 💰
 
-## Project Goal
+## What's this all about?
 
-This project aims to predict travel budgets (Hotel, Food, Activity) based on various trip features using a machine learning model served via a Flask API and packaged in a Docker container.
+Ever wondered how much that dream trip might cost? 🤔 This project helps predict travel budgets (Hotel 🏨, Food 🍔, Activities 🎭) based on your trip plans! It uses a nifty machine learning model served up with a Flask API and packaged neatly in Docker 🐳.
 
-## Project Structure
+## Project Folder Layout 📁
+
+Here's how things are organized:
 
 ```
 . 
-├── data/                 # Contains the training data (e.g., 17-mar-25-extraction.csv)
+├── data/                 # Your training data goes here (like 17-mar-25-extraction.csv)
 │   └── .placeholder
-├── src/                  # Source code
-│   ├── artifacts/        # Saved model and preprocessor artifacts
+├── src/                  # All the important code lives here!
+│   ├── artifacts/        # The brains of the operation: saved model & preprocessor
 │   │   ├── model.joblib
 │   │   └── preprocessor.joblib
-│   ├── static/           # CSS and JavaScript for the web UI
+│   ├── static/           # Pretty things for the web UI (CSS, JS)
 │   │   ├── script.js
 │   │   └── style.css
-│   ├── templates/        # HTML template for the web UI
+│   ├── templates/        # The HTML structure for the web UI
 │   │   └── index.html
-│   ├── app.py            # Flask application (API and UI serving)
-│   └── train_model.py    # Script to preprocess data and train the model
-├── tests/                # Pytest tests
+│   ├── app.py            # The Flask app that runs the show (API & UI)
+│   └── train_model.py    # Script to teach the model 🧠
+├── tests/                # Making sure things work (Pytest tests)
 │   └── test_preprocessing.py
-├── .gitignore          # Specifies intentionally untracked files that Git should ignore
-├── Dockerfile            # Instructions to build the Docker image
-├── requirements.txt      # Python dependencies
-└── README.md             # This file
+├── .gitignore          # Tells Git what to ignore (like secret virtual envs!)
+├── Dockerfile            # Instructions for Docker to build the image
+├── requirements.txt      # List of Python packages needed
+└── README.md             # You are here! 📍
 ```
 
-## Setup and Usage
+## Get Started! 🚀
 
-**1. Prerequisites:**
-   - Python 3.8+
-   - pip
-   - Docker Desktop (or Docker Engine)
-   - Git
+**1. Stuff You Need:**
+   - Python 3.8+ 🐍
+   - pip (Python's package installer)
+   - Docker Desktop (Gotta have the whale!)
+   - Git (For version control magic ✨)
 
-**2. Clone the Repository (if applicable):**
+**2. Grab the Code (if you haven't):**
    ```bash
    git clone https://github.com/jomasego/travel-budget-prediction.git
    cd travel-budget-prediction
    ```
 
-**3. Set up Virtual Environment & Install Dependencies:**
+**3. Virtual Environment & Packages:**
+   (It's like a sandbox for your Python stuff!)
    ```bash
-   # Create virtual environment
+   # Create the sandbox
    python -m venv .venv
    
-   # Activate (Windows PowerShell)
+   # Jump into the sandbox (Windows PowerShell)
    .\.venv\Scripts\Activate.ps1
-   # Or Activate (Git Bash / Linux / macOS)
+   # Or (Git Bash / Linux / macOS)
    # source .venv/bin/activate 
    
-   # Install requirements
+   # Install the goodies
    pip install -r requirements.txt
    ```
 
-**4. Place Data:**
-   - Ensure your training data CSV file (e.g., `17-mar-25-extraction.csv`) is placed inside the `data/` directory.
+**4. Add Your Data:**
+   - Make sure your training data CSV (e.g., `17-mar-25-extraction.csv`) is chilling inside the `data/` folder.
 
 **5. Train the Model:**
-   - Run the training script to generate the model and preprocessor artifacts in `src/artifacts/`:
+   - Time to make the magic happen! This creates the `.joblib` files in `src/artifacts/`.
    ```bash
    python src/train_model.py
    ```
+   *(This might take a moment, grab a coffee! ☕)*
 
-**6. Run Tests (Optional):**
+**6. Run Tests (Good idea! ✅):**
    ```bash
    pytest
    ```
 
-**7. Run Locally via Flask:**
+**7. Run Locally (The Simple Way):**
    ```bash
-   # Make sure the virtual environment is active
+   # Make sure your sandbox (.venv) is active!
    flask run --port=5001
    ```
-   - Access the web UI at [http://localhost:5001](http://localhost:5001)
+   - Open your browser to 👉 [http://localhost:5001](http://localhost:5001)
 
-**8. Build and Run via Docker:**
+**8. Run with Docker (The Cool Way 😎):**
    ```bash
-   # Build the Docker image
+   # Build the Docker image (might take a bit the first time)
    docker build -t travel-predictor .
    
-   # Run the container
+   # Run the container!
    docker run -p 5001:5001 travel-predictor
    ```
-   - Access the web UI at [http://localhost:5001](http://localhost:5001)
+   - Open your browser to 👉 [http://localhost:5001](http://localhost:5001)
 
-## API Endpoint
+## Talk to the API 🗣️
+
+Want to get predictions programmatically? No problem!
 
 - **URL:** `/predict`
 - **Method:** `POST`
-- **Data Format:** JSON
-- **Example Request (`curl`):**
+- **Data:** Send JSON
+- **Example (`curl` command):**
   ```bash
   curl -X POST http://localhost:5001/predict -H "Content-Type: application/json" -d '{
     "# Adults": 2,
-    "# Children & Babies": 1,
-    "Trip Duration Category": "Medium",
-    "Country": "France",
-    "Theme Parks": 0,
-    "Hidden Gems": 1,
+    "# Children & Babies": 0,
+    "Trip Duration Category": "Short",
+    "Country": "Spain",
+    "Theme Parks": 1,
+    "Hidden Gems": 0,
     "Cultural Attractions": 1,
-    "Beach or Pools": 0,
+    "Beach or Pools": 1,
     "Sunset Spots": 1,
     "Nature Getaway": 0
   }'
   ```
-- **Example Response:**
+- **What you get back (Example):**
   ```json
   {
     "predicted_budgets": {
-      "Activity Budget in EUR": 150.75,
-      "Food Budget in EUR": 250.50,
-      "Hotel Budget in EUR": 500.25
+      "Activity Budget in EUR": 120.00,
+      "Food Budget in EUR": 200.00,
+      "Hotel Budget in EUR": 450.99
     }
   }
   ```
-  *(Note: Actual budget values are examples)*
+  *(Disclaimer: Numbers are just examples! Your mileage may vary.)*
 
-## Notes/Limitations
+## Quick Notes & Caveats 📝
 
-- Preprocessing is basic (median/missing fill, OneHotEncoding). More advanced techniques could improve performance.
-- Model used is Linear Regression; other models might yield better results.
-- Minimal feature engineering performed.
-- No extensive hyperparameter tuning was done.
+- The data cleaning is pretty basic. Could be fancier! ✨
+- We're using a simple Linear Regression model. Others might be better! 🤷
+- Not much feature engineering went into this.
+- Hyperparameters weren't really tuned. It's more of a starting point! 🌱
